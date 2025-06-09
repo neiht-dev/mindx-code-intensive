@@ -1,0 +1,10 @@
+{
+    "name": "lesson-1-exercises",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Lesson 1 exercises",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    }
+}
