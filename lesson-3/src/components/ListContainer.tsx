@@ -20,7 +20,6 @@ const ListContainer = () => {
 			</div>
 			<div className="flex flex-col items-center justify-start gap-3">
 				<Card />
-				<Card />
 			</div>
 		</div>
 	);
