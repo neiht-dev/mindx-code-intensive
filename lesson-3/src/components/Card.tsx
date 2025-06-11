@@ -44,7 +44,7 @@ const Card = (props: Task) => {
 
                 <div className="flex flex-row items-center justify-center gap-0.5">
                     <ClockIcon />
-                    <div className="font-bold text-gray-800">{props.deadline.toLocaleDateString()}</div>
+                    <div className="font-bold text-gray-800">{props.deadline}</div>
                 </div>
             </div>
         </div>

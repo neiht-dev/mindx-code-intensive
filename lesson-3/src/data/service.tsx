@@ -30,7 +30,7 @@ export interface Task {
     status: Status | undefined;
     flag: Flag | undefined;
     assignedUser: User | undefined;
-    deadline: Date;
+    deadline: string;
 }
 
 
@@ -46,7 +46,11 @@ export const getTasks = (status: TaskStatus): Task[] => {
                 flags.find((flag) => flag.flagId === task.flagId),
             assignedUser:
                 users.find((user) => user.userId === task.assignedTo),
-            deadline: task.deadline
+            deadline: task.deadline.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            })
         };
     });
 };
