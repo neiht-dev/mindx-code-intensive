@@ -1,5 +1,11 @@
 import Card from "./Card";
-const ListContainer = () => {
+import type { Task } from "../data/service";
+
+interface ListContainerProps {
+	tasks: Task[];
+}
+
+const ListContainer = (props: ListContainerProps) => {
 	return (
 		<div className="flex h-full w-80 flex-col items-center justify-start rounded-lg bg-slate-200 p-4">
 			<div className="flex w-full flex-row items-center justify-between pb-3">
@@ -19,7 +25,9 @@ const ListContainer = () => {
 				</div>
 			</div>
 			<div className="flex flex-col items-center justify-start gap-3">
-				<Card />
+				{props.tasks.map((task, index) => (
+					<Card key={index} {...task} />
+				))}
 			</div>
 		</div>
 	);
