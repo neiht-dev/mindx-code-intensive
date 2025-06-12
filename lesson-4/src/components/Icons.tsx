@@ -8,7 +8,7 @@ export const SearchIcon = ({ color = "#C4C4C4" }: { color?: string }) => {
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<g clip-path="url(#clip0_2102_683)">
+			<g clipPath="url(#clip0_2102_683)">
 				<path
 					d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"
 					fill={color}
@@ -41,25 +41,25 @@ export const EditIcon = ({ color = "black" }: { color?: string }) => {
 	);
 };
 
-export const AttachmentIcon = ({ color = "1D2D35" }: { color?: string }) => {
+export const AttachmentIcon = ({ color = "#1D2D35" }: { color?: string }) => {
 	return (
 		<svg
-			className="h-6 w-6 overflow-visible"
+			className="shrink-0 w-6 h-6 relative overflow-visible"
 			width="24"
 			height="24"
 			viewBox="0 0 24 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<g clipPath="url(#clip0_2102_98)">
+			<g clipPath="url(#clip0_6_618)">
 				<path
 					d="M16.5 6V17.5C16.5 19.71 14.71 21.5 12.5 21.5C10.29 21.5 8.5 19.71 8.5 17.5V5C8.5 3.62 9.62 2.5 11 2.5C12.38 2.5 13.5 3.62 13.5 5V15.5C13.5 16.05 13.05 16.5 12.5 16.5C11.95 16.5 11.5 16.05 11.5 15.5V6H10V15.5C10 16.88 11.12 18 12.5 18C13.88 18 15 16.88 15 15.5V5C15 2.79 13.21 1 11 1C8.79 1 7 2.79 7 5V17.5C7 20.54 9.46 23 12.5 23C15.54 23 18 20.54 18 17.5V6H16.5Z"
 					fill={color}
-				></path>
+				/>
 			</g>
 			<defs>
-				<clipPath id="clip0_2102_98">
-					<rect width="24" height="24" fill="white"></rect>
+				<clipPath id="clip0_6_618">
+					<rect width="24" height="24" fill="white" />
 				</clipPath>
 			</defs>
 		</svg>

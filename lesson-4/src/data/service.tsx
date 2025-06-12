@@ -33,24 +33,40 @@ export interface Task {
     deadline: string;
 }
 
+export interface GetTaskRepsonse {
+    tasks: Task[];
+    total: number;
+    status: string;
+}
 
-export const getTasks = (status: TaskStatus): Task[] => {
-    const filteredTasks = tasks.filter((task) => task.statusId === status);
-    return filteredTasks.map((task) => {
-        return {
-            taskId: task.taskId,
-            title: task.title,
-            description: task.description,
-            status: taskStatus.find((status) => status.statusId === task.statusId),
-            flag:
-                flags.find((flag) => flag.flagId === task.flagId),
-            assignedUser:
-                users.find((user) => user.userId === task.assignedTo),
-            deadline: task.deadline.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric"
-            })
-        };
-    });
+export const getTasks = (filterStatus: TaskStatus, query: string = ""): GetTaskRepsonse => {
+    const filteredTasks: Task[] = tasks
+        .filter((task) => {
+            const findByStatus = task.statusId === filterStatus
+            const findByTitle = query === "" || task.title.includes(query)
+            const findByDescription = query === "" || task.description.includes(query)
+            return findByStatus && (findByTitle || findByDescription)
+        })
+        .map((task) => {
+            return {
+                taskId: task.taskId,
+                title: task.title,
+                description: task.description,
+                status: taskStatus.find((status) => status.statusId === task.statusId),
+                flag:
+                    flags.find((flag) => flag.flagId === task.flagId),
+                assignedUser:
+                    users.find((user) => user.userId === task.assignedTo),
+                deadline: task.deadline.toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric"
+                })
+            };
+        });
+    return {
+        tasks: filteredTasks,
+        total: filteredTasks.length,
+        status: taskStatus.find(status => status.statusId === filterStatus)?.name || "Unknown"
+    }
 };
