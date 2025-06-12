@@ -44,7 +44,7 @@ export const EditIcon = ({ color = "black" }: { color?: string }) => {
 export const AttachmentIcon = ({ color = "#1D2D35" }: { color?: string }) => {
 	return (
 		<svg
-			className="shrink-0 w-6 h-6 relative overflow-visible"
+			className="relative h-6 w-6 shrink-0 overflow-visible"
 			width="24"
 			height="24"
 			viewBox="0 0 24 24"

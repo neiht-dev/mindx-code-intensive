@@ -6,7 +6,6 @@ interface HeaderProps {
 }
 
 const Header = ({ query, onSearch }: HeaderProps) => {
-
 	return (
 		<div className="flex w-full flex-row items-start justify-between">
 			<div className="relative w-80">

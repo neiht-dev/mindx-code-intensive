@@ -4,17 +4,14 @@ import { getTasks, TaskStatus } from "./data/service";
 
 import React, { useState } from "react";
 
-
-
-
 const App = () => {
-	const [query, setQuery] = useState("")
+	const [query, setQuery] = useState("");
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value
-		setQuery(value)
-		console.log(value)
-	}
+		const value = e.target.value;
+		setQuery(value);
+		console.log(value);
+	};
 
 	const todoTasks = getTasks(TaskStatus.ToDo, query);
 	const inProgressTasks = getTasks(TaskStatus.InProgress, query);
@@ -30,7 +27,6 @@ const App = () => {
 				<ListContainer {...inReviewTasks} />
 				<ListContainer {...doneTasks} />
 			</div>
-
 		</div>
 	);
 };
