@@ -1,8 +1,8 @@
 import Header from "./components/Header";
 import Modal from "./components/Modal";
 import ListContainer from "./components/ListContainer";
+import { tasks } from "./data/mock";
 import { getTasks, TaskStatus } from "./data/service";
-
 import { useState } from "react";
 
 const App = () => {
@@ -15,16 +15,30 @@ const App = () => {
 
 	const handleOpenNewModal = () => setIsModalOpen(true);
 	const handleCloseModal = () => setIsModalOpen(false);
+
 	const handleSaveModal = (data: {
 		title: string;
 		description: string;
 		endDate: Date;
 		assign: number;
 		status: number;
+		flag: number;
 	}) => {
-		console.log(data)
+		console.log(data);
+		tasks.push({
+			taskId: tasks
+				.map((task) => task.taskId)
+				.reduce((maxValue, value) => Math.max(maxValue, value)) + 1,
+			title: data.title,
+			description: data.description,
+			statusId: data.status,
+			flagId: data.flag,
+			assignedTo: data.assign,
+			deadline: data.endDate
+		});
 		setIsModalOpen(false);
 	};
+
 	const todoTasks = getTasks(TaskStatus.ToDo, query);
 	const inProgressTasks = getTasks(TaskStatus.InProgress, query);
 	const inReviewTasks = getTasks(TaskStatus.InReview, query);
@@ -37,10 +51,7 @@ const App = () => {
 				onClose={handleCloseModal}
 				onSave={handleSaveModal}
 			/>
-			<Header
-				onSearch={handleSearch}
-				onOpenModal={handleOpenNewModal}
-			/>
+			<Header onSearch={handleSearch} onOpenModal={handleOpenNewModal} />
 			<div className="flex flex-row items-start justify-between gap-3">
 				<ListContainer {...todoTasks} />
 				<ListContainer {...inProgressTasks} />

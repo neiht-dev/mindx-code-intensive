@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FlagIcon, CloseIcon } from "./Icons";
-import { users, taskStatus } from "../data/mock"
+import { users, taskStatus, flags } from "../data/mock";
 
 interface ModalProps {
     isOpen: boolean;
@@ -11,9 +11,9 @@ interface ModalProps {
         endDate: Date;
         assign: number;
         status: number;
+        flag: number;
     }) => void;
 }
-
 
 const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
     // Form fields
@@ -22,23 +22,23 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
     const [endDate, setEndDate] = useState(new Date());
     const [assign, setAssign] = useState(1);
     const [status, setStatus] = useState(1);
+    const [flag, setFlag] = useState(1);
 
     // Fields validations
     const [titleValidation, setTitleValidation] = useState("");
     const validateForm = () => {
-        let pass = true
+        let pass = true;
         if (title.trim() === "") {
-            setTitleValidation("Title is required")
-            console.log(titleValidation)
-            pass = false
+            setTitleValidation("Title is required");
+            console.log(titleValidation);
+            pass = false;
         }
-        return pass
-    }
+        return pass;
+    };
 
     const handleSave = () => {
-        console.log(title, description, endDate, assign, status)
         if (!validateForm()) return;
-        onSave({ title, description, endDate, assign, status });
+        onSave({ title, description, endDate, assign, status, flag });
     };
 
     if (!isOpen) return null;
@@ -49,15 +49,22 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                 {/* Buttons */}
                 <div className="flex flex-row justify-between">
                     <button
-                        className="absolute top-6 right-6 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
+                        className="absolute top-6 right-6 cursor-pointer text-2xl text-gray-400 hover:text-gray-600"
                         onClick={onClose}
                     >
                         <CloseIcon />
                     </button>
 
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200">
-                        <FlagIcon color="red" />
-                    </div>
+                    <button
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200"
+                        onClick={() => {
+                            const maxFlagId = Math.max(...flags.map(f => f.flagId));
+                            setFlag(flag === maxFlagId ? 1 : flag + 1);
+                        }}
+                    >
+                        <FlagIcon color={flags.find(f => f.flagId === flag)?.color || flags[1].color} />
+                        <input type="hidden" value={flag} />
+                    </button>
                 </div>
 
                 {/* Title */}
@@ -101,8 +108,10 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                             <input
                                 type="date"
                                 className="mt-1 w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-gray-900"
-                                value={endDate.toISOString().split('T')[0]}
-                                onChange={(e) => setEndDate(new Date(e.target.value))}
+                                value={endDate.toISOString().split("T")[0]}
+                                onChange={(e) =>
+                                    setEndDate(new Date(e.target.value))
+                                }
                             />
                         </div>
                     </div>
@@ -128,10 +137,15 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                             <select
                                 className="mt-1 w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-gray-900"
                                 value={assign}
-                                onChange={(e) => setAssign(Number(e.target.value))}
+                                onChange={(e) =>
+                                    setAssign(Number(e.target.value))
+                                }
                             >
                                 {users.map((user) => (
-                                    <option key={user.userId} value={user.userId}>
+                                    <option
+                                        key={user.userId}
+                                        value={user.userId}
+                                    >
                                         {user.name}
                                     </option>
                                 ))}
@@ -151,7 +165,10 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                         >
                             <option value="">Choose status</option>
                             {taskStatus.map((status) => (
-                                <option key={status.statusId} value={status.statusId}>
+                                <option
+                                    key={status.statusId}
+                                    value={status.statusId}
+                                >
                                     {status.name}
                                 </option>
                             ))}
@@ -162,21 +179,21 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                     <div className="flex gap-3 pt-4">
                         <button
                             type="button"
-                            className="flex-1 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-base font-semibold text-gray-700 hover:bg-gray-50 cursor-pointer"
+                            className="flex-1 cursor-pointer rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-base font-semibold text-gray-700 hover:bg-gray-50"
                             onClick={onClose}
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 rounded-lg bg-purple-500 px-6 py-2.5 text-base font-semibold text-white hover:bg-purple-600 cursor-pointer"
+                            className="flex-1 cursor-pointer rounded-lg bg-purple-500 px-6 py-2.5 text-base font-semibold text-white hover:bg-purple-600"
                         >
                             Save
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
 };
 

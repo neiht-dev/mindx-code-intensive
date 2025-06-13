@@ -5,7 +5,6 @@ interface HeaderProps {
 	onOpenModal: () => void;
 }
 
-
 const Header = ({ onSearch, onOpenModal }: HeaderProps) => {
 	return (
 		<div className="flex w-full flex-row items-start justify-between">
