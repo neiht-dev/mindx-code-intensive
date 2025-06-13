@@ -5,8 +5,6 @@ import { tasks } from "./data/mock";
 import { getTasks, TaskStatus } from "./data/service";
 import { useState } from "react";
 
-
-
 const App = () => {
 	const [query, setQuery] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
