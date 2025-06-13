@@ -1,31 +1,43 @@
 import { useState } from "react";
 import { FlagIcon, CloseIcon } from "./Icons";
+import { users, taskStatus } from "../data/mock"
+
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSave: (data: {
         title: string;
         description: string;
-        endDate: string;
-        assign: string;
-        status: string;
+        endDate: Date;
+        assign: number;
+        status: number;
     }) => void;
 }
 
-const assignOptions = ["Nguyễn Văn A", "Nguyễn Văn B"];
-const statusOptions = ["To Do", "In Progress", "Done"];
 
 const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
+    // Form fields
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [endDate, setEndDate] = useState("15/ 06 / 2024");
-    const [assign, setAssign] = useState(assignOptions[0]);
-    const [status, setStatus] = useState("");
-    const [touched, setTouched] = useState(false);
+    const [endDate, setEndDate] = useState(new Date());
+    const [assign, setAssign] = useState(1);
+    const [status, setStatus] = useState(1);
+
+    // Fields validations
+    const [titleValidation, setTitleValidation] = useState("");
+    const validateForm = () => {
+        let pass = true
+        if (title.trim() === "") {
+            setTitleValidation("Title is required")
+            console.log(titleValidation)
+            pass = false
+        }
+        return pass
+    }
 
     const handleSave = () => {
-        setTouched(true);
-        if (!title) return;
+        console.log(title, description, endDate, assign, status)
+        if (!validateForm()) return;
         onSave({ title, description, endDate, assign, status });
     };
 
@@ -74,9 +86,8 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                                 placeholder="Type title of task"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                onBlur={() => setTouched(true)}
                             />
-                            {touched && !title && (
+                            {titleValidation && (
                                 <p className="mt-1 text-sm text-red-500">
                                     Title is required
                                 </p>
@@ -88,9 +99,10 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                                 End Date
                             </label>
                             <input
+                                type="date"
                                 className="mt-1 w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-gray-900"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
+                                value={endDate.toISOString().split('T')[0]}
+                                onChange={(e) => setEndDate(new Date(e.target.value))}
                             />
                         </div>
                     </div>
@@ -116,11 +128,11 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                             <select
                                 className="mt-1 w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-gray-900"
                                 value={assign}
-                                onChange={(e) => setAssign(e.target.value)}
+                                onChange={(e) => setAssign(Number(e.target.value))}
                             >
-                                {assignOptions.map((opt) => (
-                                    <option key={opt} value={opt}>
-                                        {opt}
+                                {users.map((user) => (
+                                    <option key={user.userId} value={user.userId}>
+                                        {user.name}
                                     </option>
                                 ))}
                             </select>
@@ -135,12 +147,12 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                         <select
                             className="mt-1 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-gray-900"
                             value={status}
-                            onChange={(e) => setStatus(e.target.value)}
+                            onChange={(e) => setStatus(Number(e.target.value))}
                         >
                             <option value="">Choose status</option>
-                            {statusOptions.map((opt) => (
-                                <option key={opt} value={opt}>
-                                    {opt}
+                            {taskStatus.map((status) => (
+                                <option key={status.statusId} value={status.statusId}>
+                                    {status.name}
                                 </option>
                             ))}
                         </select>
@@ -158,7 +170,6 @@ const Modal = ({ isOpen, onClose, onSave }: ModalProps) => {
                         <button
                             type="submit"
                             className="flex-1 rounded-lg bg-purple-500 px-6 py-2.5 text-base font-semibold text-white hover:bg-purple-600 cursor-pointer"
-                            disabled={!title}
                         >
                             Save
                         </button>

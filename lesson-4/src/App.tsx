@@ -15,8 +15,16 @@ const App = () => {
 
 	const handleOpenNewModal = () => setIsModalOpen(true);
 	const handleCloseModal = () => setIsModalOpen(false);
-	const handleSaveModal = () => setIsModalOpen(false);
-
+	const handleSaveModal = (data: {
+		title: string;
+		description: string;
+		endDate: Date;
+		assign: number;
+		status: number;
+	}) => {
+		console.log(data)
+		setIsModalOpen(false);
+	};
 	const todoTasks = getTasks(TaskStatus.ToDo, query);
 	const inProgressTasks = getTasks(TaskStatus.InProgress, query);
 	const inReviewTasks = getTasks(TaskStatus.InReview, query);
