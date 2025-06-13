@@ -5,6 +5,7 @@ interface ListContainerProps {
 	tasks: Task[];
 	total: number;
 	status: string | undefined;
+	onOpenModal: (taskId: number) => void;
 }
 
 const ListContainer = (props: ListContainerProps) => {
@@ -28,7 +29,11 @@ const ListContainer = (props: ListContainerProps) => {
 			</div>
 			<div className="flex flex-col items-center justify-start gap-3">
 				{props.tasks.map((task, index) => (
-					<Card key={index} {...task} />
+					<Card
+						key={index}
+						tasks={task}
+						onOpenModal={props.onOpenModal}
+					/>
 				))}
 			</div>
 		</div>

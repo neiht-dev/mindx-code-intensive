@@ -20,16 +20,27 @@ const CardDescription = ({ description }: { description: string }) => {
 	return <div className="flex text-gray-800">{description}</div>;
 };
 
-const Card = (props: Task) => {
+interface CardProps {
+	tasks: Task;
+	onOpenModal: (taskId: number) => void;
+}
+
+const Card = ({ tasks, onOpenModal }: CardProps) => {
 	return (
 		<div className="flex flex-col rounded-md bg-white">
 			<div className="flex w-[286px] flex-col items-start justify-start gap-3 p-3">
 				<div className="flex w-full flex-row items-center justify-between">
-					<CardTitle title={props.title} />
-					<EditIcon />
+					<CardTitle title={tasks.title} />
+
+					<button
+						className="cursor-pointer"
+						onClick={() => onOpenModal(tasks.taskId)}
+					>
+						<EditIcon />
+					</button>
 				</div>
-				<CardDescription description={props.description} />
-				<NameBadge assignedName={props.assignedUser?.name} />
+				<CardDescription description={tasks.description} />
+				<NameBadge assignedName={tasks.assignedUser?.name} />
 			</div>
 			<hr className="border-gray-200" />
 
@@ -38,12 +49,12 @@ const Card = (props: Task) => {
 					<AttachmentIcon />
 					<div className="font-bold text-gray-800">3</div>
 				</div>
-				{props.flag && <FlagIcon color={props.flag.color} />}
+				{tasks.flag && <FlagIcon color={tasks.flag.color} />}
 
 				<div className="flex flex-row items-center justify-center gap-0.5">
 					<ClockIcon />
 					<div className="font-bold text-gray-800">
-						{props.deadline}
+						{tasks.deadline}
 					</div>
 				</div>
 			</div>

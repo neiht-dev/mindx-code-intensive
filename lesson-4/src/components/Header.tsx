@@ -2,7 +2,7 @@ import { SearchIcon } from "./Icons";
 
 interface HeaderProps {
 	onSearch: (query: string) => void;
-	onOpenModal: () => void;
+	onOpenModal: (taskId: number) => void;
 }
 
 const Header = ({ onSearch, onOpenModal }: HeaderProps) => {
@@ -19,7 +19,7 @@ const Header = ({ onSearch, onOpenModal }: HeaderProps) => {
 			</div>
 			<button
 				className="cursor-pointer rounded-lg bg-blue-700 px-5 py-2 font-medium text-nowrap text-white"
-				onClick={onOpenModal}
+				onClick={() => onOpenModal(-1)}
 			>
 				New Item
 			</button>
