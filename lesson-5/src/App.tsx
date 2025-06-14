@@ -1,14 +1,18 @@
 import Header from "./components/Header";
-import Modal from "./components/Modal";
+// import Modal from "./components/Modal";
+import ModalAntd from "./components/ModalAntd"
 import ListContainer from "./components/ListContainer";
 import { tasks } from "./data/mock";
 import { getTasks, TaskStatus } from "./data/service";
 import { useState } from "react";
 
+
+
 const App = () => {
 	const [query, setQuery] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [taskId, setTaskId] = useState(-1);
+
 
 	const handleSearch = (query: string) => {
 		setQuery(query);
@@ -64,10 +68,10 @@ const App = () => {
 	const inProgressTasks = getTasks(TaskStatus.InProgress, query);
 	const inReviewTasks = getTasks(TaskStatus.InReview, query);
 	const doneTasks = getTasks(TaskStatus.Done, query);
-
+	console.log("rerender")
 	return (
 		<div className="relative flex min-h-screen flex-col items-start justify-start gap-3 p-5">
-			<Modal
+			<ModalAntd
 				taskId={taskId}
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}

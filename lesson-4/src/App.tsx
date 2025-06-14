@@ -66,7 +66,7 @@ const App = () => {
 	const inProgressTasks = getTasks(TaskStatus.InProgress, query);
 	const inReviewTasks = getTasks(TaskStatus.InReview, query);
 	const doneTasks = getTasks(TaskStatus.Done, query);
-
+	console.log("rerender")
 	return (
 		<div className="relative flex min-h-screen flex-col items-start justify-start gap-3 p-5">
 			<Modal

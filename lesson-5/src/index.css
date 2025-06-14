@@ -4,3 +4,51 @@
 body {
 	font-family: Roboto, sans-serif;
 }
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+.custom-fade-enter,
+.custom-fade-appear {
+	opacity: 0;
+	animation-play-state: paused;
+	animation-duration: 0.05s;
+	animation-fill-mode: both;
+	animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+
+.custom-fade-leave {
+	animation-play-state: paused;
+	animation-duration: 0.05s;
+	animation-fill-mode: both;
+	animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.custom-fade-enter.custom-fade-enter-active,
+.custom-fade-appear.custom-fade-appear-active {
+	animation-name: fadeIn;
+	animation-play-state: running;
+}
+
+.custom-fade-leave.custom-fade-leave-active {
+	animation-name: fadeOut;
+	animation-play-state: running;
+	pointer-events: none;
+}
